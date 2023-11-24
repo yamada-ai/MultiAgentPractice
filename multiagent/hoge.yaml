@@ -1,0 +1,92 @@
+prompts:
+  prompt: &prompt |-
+    [質問]
+    ${source_text}
+    [アシスタント1の回答の開始]
+    ${compared_text_one}
+    [アシスタント1の回答の終了]
+    [アシスタント2の回答の開始]
+    ${compared_text_two}
+    [アシスタント2の回答の終了]
+    [システム]
+    上記のユーザーの質問に対する2つのAIアシスタントのパフォーマンスに関するフィードバックをお願いします。
+    回答の有益さ、関連性、正確性、および詳細度を考慮してください。
+    同じタスクが他のいくつかの審査員にも割り当てられています。最終判断を下す前に彼らと協力して検討し、批判的に考える責任があります。
+    各アシスタントには、1から10のスケールで総合スコアが与えられ、高いスコアほど総合的なパフォーマンスが良いことを示します。
+
+    これがあなたの対話履歴です：
+    ${chat_history}
+
+    ${role_description}
+
+    これからあなたの発言の時間です。簡潔で明確にお願いします、${agent_name}！
+
+    ${final_prompt}
+
+
+environment:
+  env_type: llm_eval
+  max_turns: 4
+  rule:
+    order:
+      type: sequential
+    visibility:
+      type: all
+    selector:
+      type: basic
+    updater:
+      type: basic
+    describer:
+      type: basic
+
+agents:
+  - 
+    agent_type: llm_eval_multi
+    name: 一般の人々
+    final_prompt_to_use: |-
+      まず、評価の包括的な説明を提供してください。潜在的な偏見を避け、回答が提示された順番が判断に影響を与えないようにしてください。
+      それから、アシスタント1と2のスコアをそれぞれ示す2つの行を出力してください。
+
+      他の審査員と同じ値を出力する必要はありません！
+      以下のフォーマットで厳密に出力してください：
+      評価の根拠: [ここに説明]
+      アシスタント1のスコア: [スコアのみ]
+      アシスタント2のスコア: [スコアのみ]
+    role_description: |-
+      あなたは現在、このタスクの審査員である一般の人です。ストーリーに興味を持ち、調査の最新情報を探しています。他の人の判断と相談し、どちらが優れているかを選ぶ責任があります。
+    memory:
+      memory_type: chat_history
+    memory_manipulator:
+      memory_manipulator_type: basic
+    prompt_template: *prompt
+    llm:
+      model: "gpt-3.5-turbo-0301"
+      llm_type: gpt-3.5-turbo-0301
+      temperature: 0
+      max_tokens: 512
+  -
+    agent_type: llm_eval_multi
+    name: 批評家
+    final_prompt_to_use: |-
+      まず、評価の包括的な説明を提供してください。潜在的な偏見を避け、回答が提示された順番が判断に影響を与えないようにしてください。
+      それから、アシスタント1と2のスコアをそれぞれ示す2つの行を出力してください。
+
+      他の審査員と同じ値を出力する必要はありません！
+      以下のフォーマットで厳密に出力してください：
+      評価の根拠: [ここに説明]
+      アシスタント1のスコア: [スコアのみ]
+      アシスタント2のスコア: [スコアのみ]
+    role_description: |-
+      あなたは現在、このタスクの審査員である批評家です。要約の執筆において滑らかな文章、明確な文章、および良い表現を確認します。他の人の判断を疑問視し、二つの回答が同じレベルであれば代替案を提供するのがあなたの仕事です。
+    memory:
+      memory_type: chat_history
+    memory_manipulator:
+      memory_manipulator_type: basic
+    prompt_template: *prompt
+    llm:
+      model: "gpt-3.5-turbo-0301"
+      llm_type: gpt-3.5-turbo-0301
+      temperature: 0
+      max_tokens: 512
+
+tools: ~
