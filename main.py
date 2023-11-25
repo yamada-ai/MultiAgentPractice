@@ -1,6 +1,7 @@
 import argparse
 import asyncio
 import yaml
+from multiagent import agentverse
 
 # parser = argparse.ArgumentParser()
 
@@ -15,7 +16,8 @@ def main():
 
     with open("./multiagent/hoge.yaml", "r") as f:
         config = yaml.safe_load(f)
-    print(config["agents"][0])
+    # print(config["agents"][0])
+    # load config
 
 if __name__ == "__main__":
     main()

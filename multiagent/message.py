@@ -5,7 +5,7 @@ class Message:
             self,
             content: str = "",
             sender: str = "",
-            receiver: Set[str] = set("all")
+            receiver: Set[str] = set({"all"})
         ) -> None:
         
         self.content = content
