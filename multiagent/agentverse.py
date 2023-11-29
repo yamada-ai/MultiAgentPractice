@@ -3,7 +3,7 @@ from typing import List
 
 from multiagent.agents.base import BaseAgent
 from multiagent.environments.base import BaseEnvironment
-
+from multiagent.initialize import *
 
 
 class AgentVerse:
@@ -17,8 +17,14 @@ class AgentVerse:
         self.environment = environment
     
     @classmethod
-    def from_config(cls, config):
+    def from_config(cls, conf_fname, config_path="./multiagent/"):
+        
+        config = load_config(conf_fname, config_path)
+        agents_config = config["agents"]
+        env_config = config["environment"]
+        print(agents_config)
 
+        print(env_config)
         return
 
     def run(self):

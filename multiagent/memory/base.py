@@ -1,17 +1,17 @@
-from abc import abstractclassmethod
+from abc import abstractmethod
 from typing import Dict, List
 
 from multiagent.message import Message
 
 class BaseMemory:
-	@abstractclassmethod
+	@abstractmethod
 	def add_message(self, messages: List[Message]) -> None:
 		pass
 
-	@abstractclassmethod
+	@abstractmethod
 	def to_string(self)-> str:
 		pass
 
-	@abstractclassmethod
+	@abstractmethod
 	def reset(self) -> None:
 		pass
