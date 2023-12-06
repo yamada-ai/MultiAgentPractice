@@ -6,7 +6,7 @@ from .base import BaseMemory
 
 class History(BaseMemory):
 	
-    def __init__(self, messages) -> None:
+    def __init__(self, messages: List[Message] = []) -> None:
         self.messages = messages
               
     def add_message(self, messages: List[Message]) -> None:

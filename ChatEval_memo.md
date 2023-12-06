@@ -66,3 +66,19 @@ https://github.com/thunlp/ChatEval/tree/main/agentverse
     - utils.py
     
 - main.py
+
+
+- 議論の流れ
+    - A1, A2 の2人でどうやって議論を進めさせるか
+    - 完成形
+        - A1: 
+        - A2: 
+        - A1: 
+        - A2: 
+    - 実装上は
+        - T1
+            - A1:
+            - A2: 
+        - T2
+            - A1: 
+            - A2:

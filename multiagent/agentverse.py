@@ -22,10 +22,12 @@ class AgentVerse:
         config = load_config(conf_fname, config_path)
         agents_config = config["agents"]
         env_config = config["environment"]
-        print(agents_config)
-
-        print(env_config)
-        return
+        # print(agents_config)
+        agents = []
+        for ag_conf in agents_config:
+            agents.append(build_agent(ag_conf))
+        environment = build_environment(env_config, agents)
+        return cls(agents, environment)
 
     def run(self):
         """Run the environment from scratch until it is done."""

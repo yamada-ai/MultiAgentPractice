@@ -7,13 +7,15 @@ from multiagent.memory.base import BaseMemory
 class BaseAgent:
 	def __init__(self,
 			name: str,
+			role_desc: str,
 			prompt_templete: str,
 			memory : BaseMemory,
 			max_retry:int,
 			receiver:Set[str] = set({"all"})
 		) -> None:
 		self.name = name
-		self.prompt_templete = prompt_templete
+		self.role_desc = role_desc
+		self.prompt_template = prompt_templete
 		self.memory = memory
 		self.max_retry = max_retry
 		self.receiver = receiver
@@ -68,4 +70,11 @@ class BaseAgent:
 		else:
 			raise ValueError(
 				"(BaseAgent:remove)receiverの型が不正"
-			)	
+			)
+
+	def __repr__(self):
+		return (
+            f"BaseAgent(name={self.name}, role_desc={self.role_desc}, "
+            f"prompt_template={self.prompt_template}, memory={self.memory}, "
+            f"max_retry={self.max_retry}, receiver={self.receiver})"
+        )	
